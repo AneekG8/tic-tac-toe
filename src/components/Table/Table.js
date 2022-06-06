@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react';
 import Cross from '../cross/Cross';
 import Naught from '../naught/Naught';
 import './Table.css'
-import {check} from  '../../utils/game.js';
+import {check,bestMove} from  '../../utils/game.js';
 const Table = () => {
     console.log('rendering table')
 
@@ -56,7 +56,7 @@ const Table = () => {
         if(!move){
             setTimeout(()=>{
                 computerMove()
-            },2000)
+            },1500)
         }
     })
 
@@ -82,10 +82,9 @@ const Table = () => {
         if(gameOver || moves === 9)
             return
 
-        let n = Math.floor(Math.random() * 9)
+        const m = bestMove(table,moves)
 
-        while(table[parseInt(n/3)][parseInt(n%3)] !== -1)
-            n = Math.floor(Math.random() * 9)
+        const n = m.row * 3 + m.col
 
         document.querySelectorAll('.box')[n].click()
 
